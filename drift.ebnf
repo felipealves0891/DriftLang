@@ -1,0 +1,154 @@
+keyword             = "event"
+                    | "sub"
+                    | "async"
+                    | "let"
+                    | "const"
+                    | "bind"
+                    | "type"
+                    | "fun"
+                    | "on"
+                    | "when"
+                    | "if"
+                    | "else"
+                    | "to"
+                    | "in"
+                    | "for"                    
+                    | "while"
+                    | "emit"
+                    | "match"
+                    | "success"
+                    | "error"
+                    | "true"
+                    | "false"
+                    | "and"
+                    | "or"
+                    | "not"
+                    | "string"
+                    | "int"
+                    | "float"
+                    | "bool";
+
+
+program             = { statement } ;
+
+statement           = reactiveBlock
+                    | ifStatement
+                    | whileLoop
+                    | forLoop
+                    | foreachLoop
+                    | expressionStatement
+                    | eventDeclaration
+                    | subscribeDeclaration
+                    | emitStatement 
+                    | declaration
+                    | returnStatement;
+
+declaration         = variableDeclaration 
+                    | bindDeclaration 
+                    | structDeclaration 
+                    | functionDeclaration 
+                    | arrayDeclaration
+                    | actionDeclaration;
+
+returnStatement     = expression ; 
+
+eventDeclaration    = "event" identifier "(" parameters ")" ;
+
+subscribeDeclaration= "sub" identifier "(" parameters ")" block ;
+
+variableDeclaration = ("let" | "const" | "async let") identifier ":" type [ "=" expression ] ";" ;
+
+bindDeclaration     = "bind" identifier ":" type "->" expression ";" ;
+
+structDeclaration   = "type" identifier "{" field "}" ;
+
+field               = identifier ":" type { "," identifier ":" type } ;
+
+functionDeclaration = "fun" identifier "(" parameters "):" type block ;
+
+arrayDeclaration    = "[" expression [ "," match ] "]" ;
+
+actionDeclaration   = "(" parameters ")" ":" type block ;
+
+parameters          = identifier ":" type { "," identifier ":" type } ;
+
+type                = "string"
+                    | "int"
+                    | "float"
+                    | "bool"
+                    | identifier;
+
+reactiveBlock       = "on" identifier [ "when" identifier "->" expression ] block ;
+
+ifStatement         = "if" expression block [ "else" block ] ;
+
+whileLoop           = "while" expression block ;
+
+forLoop             = "for" variableDeclaration "to" expression block ;
+
+foreachLoop         = "for" variableDeclaration "in" expression block ;
+
+emitStatement       = "emit" identifier "(" arguments ")" ;
+
+expressionStatement = expression | pipeline ";";
+
+expression          = assignment | match;
+
+match               = "match" expression "{" 
+                        "success" actionDeclaration "," 
+                        "error" actionDeclaration  
+                      "}" ;
+
+assignment          = logicalOr | pipeline;
+
+pipeline            = expression , { "|>" , expression } ;
+
+block               = "{" { statement } "}" ;
+
+logicalOr           = logicalAnd { "or" logicalAnd } ;
+
+logicalAnd          = equality { "and" equality } ;
+
+equality            = comparison { ( "==" | "!=" ) comparison } ; 
+
+comparison          = term { ( "<" | "<=" | ">" | ">=" ) term } ;
+
+term                = factor { ( "+" | "-" ) factor } ;
+
+factor              = unary { ( "*" | "/" ) unary } ;
+
+unary               = ( "not" | "-" ) unary
+                    | primary ;
+
+primary             = literal
+                    | identifier
+                    | functionCall
+                    | structAccess
+                    | arrayAccess
+                    | "(" expression ")" ;
+
+structAccess        = identifier "->" (identifier | functionCall | structAccess);
+
+arrayAccess         = identifier "[" expression "]" ;
+
+functionCall        = identifier "(" [ arguments ] ")" ;
+
+arguments           = expression { "," expression } ;
+
+literal             = int | float | string | boolean ;
+
+float 				      = int "." int ;
+
+int              	  = digit { digit } ;
+
+string              = "'" { character } "'" ;
+
+boolean             = "true" | "false" ;
+
+identifier          = letter { letter | digit | "_" } ;
+
+letter              = "a".."z" | "A".."Z" ;
+
+digit               = "0".."9" ;
+
+character           = ? any character except ? ;
