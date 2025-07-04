@@ -15,11 +15,9 @@ public class IdentifierNode : DriftNode, IDriftValue, IIdentifier
 
     public string Identifier => Value;
     public string Value { get; }
-    public IDataType Type { get; private set; } = null!;
+    public IDataType Type { get; set; } = null!;
     public object Unwrap => null!;
-
     public override DriftNode[] Children => [];
-
     public override string ToString()
     {
         return Value;

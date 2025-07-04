@@ -118,7 +118,8 @@ public class ReturnTypeResolver
             "<" => DriftEnv.TypeRegistry.Resolve("bool"),
             "and" => DriftEnv.TypeRegistry.Resolve("bool"),
             "or" => DriftEnv.TypeRegistry.Resolve("bool"),
-            _ => throw new Exception()
+            "." => DriftEnv.TypeRegistry.Resolve("string"),
+            _ => _typeVoid
         };
     }
 

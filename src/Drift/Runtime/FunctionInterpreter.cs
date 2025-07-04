@@ -47,7 +47,6 @@ public class FunctionInterpreter : DriftInterpreter, IDriftFunction
     public IDriftValue? Invoke(IDictionary<string, IDriftValue> parameters)
     {
         Reset();
-        
         using (Context.EnterScope())
         {
             foreach (var key in parameters.Keys)

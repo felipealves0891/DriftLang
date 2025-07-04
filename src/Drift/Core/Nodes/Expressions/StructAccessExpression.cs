@@ -1,5 +1,7 @@
 using System;
 using Drift.Core.Location;
+using Drift.Core.Nodes.Values;
+using Drift.Core.Types;
 
 namespace Drift.Core.Nodes.Expressions;
 
@@ -22,7 +24,8 @@ public class StructAccessExpression : ExpressionNode, IIdentifier
 
     public override IDriftValue Evaluate(IExecutionContext context)
     {
-        throw new NotImplementedException();
+        var instance = (StructInstanceValue)context.Get(Instance);
+        return instance.Properties[Property].Evaluate(context);
     }
 
     public override string ToString()

@@ -31,7 +31,7 @@ public class ExpressionHelper
     {
         var left = ParseTerm();
         while (
-            (CurrentType is TokenType.AND or TokenType.OR) ||
+            (CurrentType is TokenType.AND or TokenType.OR or TokenType.ACCESS) ||
             (CurrentSource is "==" or "!=") ||
             (CurrentSource is ">" or "<") ||
             (CurrentSource is ">=" or "<=")

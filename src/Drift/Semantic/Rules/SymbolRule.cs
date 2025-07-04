@@ -155,6 +155,8 @@ public class SymbolRule : BaseRule
         var symbol = Table.Resolve(identifier.Value);
         if (!symbol.HasValue)
             Aggregator.AddErrorWasNotDeclared(identifier.Value, identifier.Location);
+        else
+            identifier.Type = symbol.Value.Type;
     }
 
     private void ForToStatementApply(DriftNode node)

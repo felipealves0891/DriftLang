@@ -2,6 +2,7 @@ using System;
 using Drift.Core.Nodes.Expressions;
 using Drift.Core.Location;
 using System.Text;
+using Drift.Core.Nodes.Literals;
 
 namespace Drift.Core.Nodes.Statements;
 
@@ -18,11 +19,20 @@ public class WhileStatement : BlockStatement
 
     public ExpressionNode Expression { get; }
 
-    public override DriftNode[] Children => Nodes;
+    public override DriftNode[] Children => [Expression, ..Nodes];
 
     public override void Execute(IExecutionContext context)
     {
-        throw new NotImplementedException();
+        using (context.EnterScope())
+        {
+            var interpreter = context.CreateInterpreter(this);
+            var control = (BooleanLiteral)Expression.Evaluate(context);
+            while (control.Value)
+            {
+                interpreter.Invoke(new Dictionary<string, IDriftValue>());
+                control = (BooleanLiteral)Expression.Evaluate(context);
+            }
+        }
     }
 
     public override string ToString()

@@ -31,9 +31,7 @@ public class BinaryExpression : ExpressionNode
     {
         var left = GetValue(Left, context);
         var right = GetValue(Right, context);
-        if (left is null)
-            left = GetValue(Left, context);
-            
+        
         return Operator switch
         {
             "+" => Sum(left, right),
@@ -45,9 +43,10 @@ public class BinaryExpression : ExpressionNode
             ">=" => IsGreaterThanOrEqual(left, right),
             "<=" => IsLessThanOrEqual(left, right),
             "<" => IsLessThan(left, right),
-            "and" => new BooleanLiteral(((BooleanLiteral)left).Value && ((BooleanLiteral)Right).Value, Location),
-            "or" => new BooleanLiteral(((BooleanLiteral)left).Value || ((BooleanLiteral)Right).Value, Location),
-            _ => throw new Exception()
+            "and" => new BooleanLiteral(((BooleanLiteral)left).Value && ((BooleanLiteral)right).Value, Location),
+            "or" => new BooleanLiteral(((BooleanLiteral)left).Value || ((BooleanLiteral)right).Value, Location),
+            "." => new StringLiteral(((LiteralNode)left).Unwrap.ToString() + ((LiteralNode)right).Unwrap.ToString(), Location),
+            _ => throw new Exception($"Operador não suportado ({Operator})!")
         };
     }
 

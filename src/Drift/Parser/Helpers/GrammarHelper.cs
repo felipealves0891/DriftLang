@@ -35,7 +35,8 @@ public static class GrammarHelper
             source.Advance(TokenType.OPEN_PAREN);
             var action = ActionParser(source);
             actions[type] = action;
-            source.Advance();
+            if(source.Match(TokenType.COMMA))
+                source.Advance();
         }
         
         var end = source.Current.Location;

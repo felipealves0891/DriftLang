@@ -22,12 +22,10 @@ public class StructDeclaration : DeclarationNode
 
     public override void Declare(IExecutionContext context)
     {
-        throw new NotImplementedException();
     }
 
     public override void Execute(IExecutionContext context)
     {
-        throw new NotImplementedException();
     }
 
     public override string ToString()

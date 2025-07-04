@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using Drift.Core.Ast.Types;
 using Drift.Core.Nodes;
+using Drift.Core.Nodes.Declarations;
 using Drift.Core.Nodes.Statements;
 
 namespace Drift.Semantic.Rules.Helpers;
@@ -22,6 +23,9 @@ public class ReturnStatementFinder
             return;
         }
 
+        if (node is DeclarationNode)
+            return;
+            
         foreach (var child in node.Children)
             InternalFind(child);
     }
