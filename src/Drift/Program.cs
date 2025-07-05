@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Drift.Compiler;
+using Drift.Core;
 using Drift.Lexer;
 using Drift.Lexer.Reader;
 using Drift.Parser;
@@ -11,30 +13,18 @@ Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.File(@"D:\Source\Scripts\logs\execution.txt", rollingInterval: RollingInterval.Minute)
             .CreateLogger();
-            
-var source = new DriftStreamReader(@"D:\Source\Scripts\main.dft");
-var tokenizer = new Tokenizer(source);
-var parser = new DriftParser(tokenizer);
-var script = parser.Parse();
-
-var analizer = new DefaultSemanticAnalizer([
-    new SymbolRule(),
-    new TypeRule(),
-    new ConsistencyRule()
-]);
-
-var diagnostic = analizer.Analyze(script);
-if (diagnostic.Errors.Count() > 0)
+try
 {
-    Console.WriteLine(diagnostic);
-    return;
+    var compiler = new DriftCompiler();
+    var executionTime = compiler.Compile(@"D:\Source\Scripts\main.dft");
+
+    Console.WriteLine("Execution Time: {0}", executionTime);
+    Console.WriteLine(compiler.Diagnostic);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+    foreach (var frame in DriftEnv.StackFrame)
+        Console.WriteLine(" at {0}", frame.Location);
 }
 
-var sw = Stopwatch.StartNew();
-var interpreter = new DriftInterpreter(script);
-interpreter.Interpret();
-sw.Stop();
-
-Console.WriteLine("Execution Time: {0}", sw.ElapsedMilliseconds);
-Console.WriteLine();
-Console.WriteLine(diagnostic);

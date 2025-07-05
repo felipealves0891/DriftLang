@@ -45,13 +45,21 @@ public class DriftInterpreter
         StatementNode? node;
         while ((node = NextNode()) != null)
         {
+            var disposable = DriftEnv.StackFrame.Push(node);
+
             if (node is DeclarationNode declaration)
                 declaration.Declare(_context);
 
             node.Execute(_context);
             if (node is ReturnStatement returnStatement)
-                return returnStatement.Output;
+            {
+                disposable.Dispose();
+                return returnStatement.Output;   
+            }
+                
+            disposable.Dispose();
         }
+        
         return null;
     }
 
