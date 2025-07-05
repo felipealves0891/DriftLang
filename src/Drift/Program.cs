@@ -5,7 +5,13 @@ using Drift.Parser;
 using Drift.Runtime;
 using Drift.Semantic.Analyzers;
 using Drift.Semantic.Rules;
+using Serilog;
 
+Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.File(@"D:\Source\Scripts\logs\execution.txt", rollingInterval: RollingInterval.Minute)
+            .CreateLogger();
+            
 var source = new DriftStreamReader(@"D:\Source\Scripts\main.dft");
 var tokenizer = new Tokenizer(source);
 var parser = new DriftParser(tokenizer);

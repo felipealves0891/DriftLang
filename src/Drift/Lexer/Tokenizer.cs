@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using Drift.Core.Location;
 using Drift.Lexer.Reader;
+using Serilog;
 
 namespace Drift.Lexer;
 
@@ -33,12 +34,10 @@ public class Tokenizer
     private const byte AT = (byte)'@';
 
     private readonly IReader _source;
-    private readonly bool _debug;
 
-    public Tokenizer(IReader source, bool debug = false)
+    public Tokenizer(IReader source)
     {
         _source = source;
-        _debug = debug;
     }
 
     public IEnumerable<Token> Tokenize() 
@@ -139,8 +138,7 @@ public class Tokenizer
     {
         var token = new Token(type, source, _source.FileName, _source.Column, _source.Line);
         _source.Advance();
-        
-        Log(token);
+        Log.Debug(token.ToString());
         return token;
     }
     
@@ -169,7 +167,7 @@ public class Tokenizer
             ? new Token(TokenType.FLOAT_LITERAL, number, _source.FileName, positionStart, positionEnd)
             : new Token(TokenType.INTEGER_LITERAL, number, _source.FileName, positionStart, positionEnd);
 
-        Log(token);    
+        Log.Debug(token.ToString());
         return token;
     }
 
@@ -193,8 +191,7 @@ public class Tokenizer
         var type = Keywords.IsKeyword(identifier);
         var positionEnd = new Position(_source.Line, _source.Column);
         var token = new Token(type, identifier, _source.FileName, positionStart, positionEnd);
-
-        Log(token);
+        Log.Debug(token.ToString());
         return token;
     }
 
@@ -213,7 +210,7 @@ public class Tokenizer
         _source.Advance();
 
         var token = new Token(TokenType.STRING_LITERAL, text, _source.FileName, positionStart, positionEnd);
-        Log(token);
+        Log.Debug(token.ToString());
         return token;
     }
 
@@ -235,7 +232,7 @@ public class Tokenizer
         _source.Advance();
 
         var token = new Token(TokenType.OPERATOR, _source.GetString(start, end), _source.FileName, positionStart, positionEnd);
-        Log(token);
+        Log.Debug(token.ToString());
         return token;
     }
 
@@ -246,14 +243,10 @@ public class Tokenizer
         _source.Advance();
         var end = new Position(_source.Line, _source.Column);
         var token = new Token(TokenType.ARROW, [MINUS, GREATER_THAN], _source.FileName, start, end);
-        Log(token);
+        Log.Debug(token.ToString());
         return token;
     }
 
-    private void Log(Token token)
-    { 
-        if(_debug) Console.WriteLine(token);    
-    }
     
     
     public bool IsAssignment(byte beforeChar, byte currentChar, byte nextChar)

@@ -5,6 +5,7 @@ using Drift.Core.Nodes.Expressions;
 using Drift.Core.Nodes.Statements;
 using Drift.Lexer;
 using Drift.Parser.NodeParser;
+using Serilog;
 
 namespace Drift.Parser;
 
@@ -40,6 +41,8 @@ public class DriftParser : ITokenSource
         while (Current.Type != TokenType.EOF)
         {
             var node = NextNode();
+            Log.Debug(node.GetType().Name);
+            
             StatementNode statement = node is StatementNode stmt
                                     ? stmt
                                     : new ExpressionStatement((ExpressionNode)node, node.Location);
