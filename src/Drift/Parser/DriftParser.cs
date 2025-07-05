@@ -11,6 +11,7 @@ namespace Drift.Parser;
 
 public class DriftParser : ITokenSource
 {
+    private readonly ILogger _logger;
     private readonly IList<INodeParser> _parsers;
     private readonly Tokenizer _tokenizer;
     private Token _beforeToken;
@@ -19,6 +20,7 @@ public class DriftParser : ITokenSource
 
     public DriftParser(Tokenizer tokenizer)
     {
+        _logger = Log.ForContext<DriftParser>();
         _tokenizer = tokenizer;
         _currentToken = _tokenizer.NextToken();
         _nextToken = _tokenizer.NextToken();
@@ -41,7 +43,7 @@ public class DriftParser : ITokenSource
         while (Current.Type != TokenType.EOF)
         {
             var node = NextNode();
-            Log.Debug(node.GetType().Name);
+            _logger.Debug(node.ToString() ?? node.GetType().Name);
             
             StatementNode statement = node is StatementNode stmt
                                     ? stmt

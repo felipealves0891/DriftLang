@@ -27,7 +27,6 @@ public class ActionStatement : BlockStatement
     
     public override void Execute(IExecutionContext context)
     {
-        throw new NotImplementedException();
     }
 
     public override string ToString()

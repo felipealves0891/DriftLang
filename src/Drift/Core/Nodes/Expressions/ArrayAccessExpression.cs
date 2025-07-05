@@ -1,6 +1,8 @@
 using System;
 using Drift.Core.Location;
 using Drift.Core.Nodes.Helpers;
+using Drift.Core.Nodes.Literals;
+using Drift.Core.Nodes.Values;
 
 namespace Drift.Core.Nodes.Expressions;
 
@@ -22,7 +24,9 @@ public class ArrayAccessExpression : ExpressionNode, IIdentifier
 
     public override IDriftValue Evaluate(IExecutionContext context)
     {
-        throw new NotImplementedException();
+        var array = (ArrayValue)context.Get(Identifier);
+        var index = (IntegerLiteral)Index.Evaluate(context);
+        return array.Source[index.Value];
     }
 
     public override string ToString()

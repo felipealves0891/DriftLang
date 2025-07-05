@@ -9,7 +9,7 @@ public class StructFieldDeclaration : DeclarationNode
     public StructFieldDeclaration(
         string identifier,
         IDataType type,
-        SourceLocation location) 
+        SourceLocation location)
         : base(identifier, location)
     {
         Type = type;
@@ -25,5 +25,10 @@ public class StructFieldDeclaration : DeclarationNode
 
     public override void Execute(IExecutionContext context)
     {
+    }
+
+    public override string ToString()
+    {
+        return $"{Identifier}: {Type.Name}";
     }
 }

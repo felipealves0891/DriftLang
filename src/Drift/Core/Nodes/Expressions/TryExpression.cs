@@ -70,6 +70,6 @@ public class TryExpression : ExpressionNode
 
     public override string ToString()
     {
-        return $"try {Expression} {{\n\tsuccess{Success},\n\terror{Error}\n}}";
+        return $"try {Expression} {{success{Success},error{Error}}}";
     }
 }

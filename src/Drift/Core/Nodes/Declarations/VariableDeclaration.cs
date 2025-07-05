@@ -67,8 +67,7 @@ public class VariableDeclaration : DeclarationNode
     public override string ToString()
     {
         var typeVar = Immutable ? "const" : "let";
-        var isAsync = Async ? "async " : "";
         var assignment = Assignment is not null ? $"= {Assignment};" : ";";
-        return $"{isAsync}{typeVar} {Identifier}: {Type.Name} {assignment}";
+        return $"{typeVar} {Identifier}: {Type.Name} {assignment}";
     }
 }

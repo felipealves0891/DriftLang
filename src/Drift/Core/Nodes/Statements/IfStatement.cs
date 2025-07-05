@@ -53,9 +53,9 @@ public class IfStatement : BlockStatement
     public override string ToString()
     {
         var elseBlock = ElseBlock is not null
-                    ? $"else{{\n{string.Join('\n', ElseBlock.Nodes.Select(x => $"\t{x}"))}\n}}"
+                    ? $"else{{\n{string.Join(' ', ElseBlock.Nodes.Select(x => $"\t{x}"))}}}"
                     : "";
 
-        return $"if {Expression} {{\n{base.ToString()}\n}}{elseBlock}";
+        return $"if {Expression} {{ {base.ToString()} }}{elseBlock}";
     }
 }

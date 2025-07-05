@@ -30,7 +30,6 @@ public class StructDeclaration : DeclarationNode
 
     public override string ToString()
     {
-        var fields = string.Join(",\n", Fields.Select(x => $"\t{x.Identifier}: {x.Type}"));
-        return $"type {Identifier} {{\n{fields}\n}}";
+        return $"type {Identifier} {{...}}";
     }
 }

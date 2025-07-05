@@ -28,7 +28,6 @@ public class OnDeclaration : FunctionDeclaration
     public override string ToString()
     {
         var parameters = string.Join(',', Parameters.Select(x => $"{x.Identifier}:{x.Type}"));
-        var block = string.Join('\n', Nodes.Select(x => $"\t{x}"));
-        return $"on {Identifier} ({parameters}) {{\n{block}\n}}";
+        return $"on {Identifier} ({parameters}) {{...}}";
     }
 }

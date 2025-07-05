@@ -41,7 +41,6 @@ public class FunctionDeclaration : DeclarationNode
     public override string ToString()
     {
         var parameters = string.Join(',', Parameters.Select(x => $"{x.Identifier}:{x.Type}"));
-        var block = string.Join('\n', Nodes.Select(x => $"\t{x}"));
-        return $"fun {Identifier} ({parameters}) {{\n{block}\n}}";
+        return $"fun {Identifier} ({parameters}) {{...}}";
     }
 }
