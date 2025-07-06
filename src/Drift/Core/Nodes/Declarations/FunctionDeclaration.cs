@@ -15,12 +15,9 @@ public class FunctionDeclaration : DeclarationNode
         : base(identifier, nodes, location)
     {
         Parameters = parameters;
+        Type = type;
         foreach (var parameter in Parameters)
             parameter.Parent = this;
-
-        Type = type;
-        foreach (var node in Nodes)
-            node.Parent = this;
     }
 
     public VariableDeclaration[] Parameters { get; }

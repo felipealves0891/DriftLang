@@ -26,6 +26,7 @@ public class IfStatement : BlockStatement
         Expression = expression;
         var elseLocation = elseBlock.First().Location.Join(elseBlock.Last().Location);
         ElseBlock = new ElseStatement(elseBlock, elseLocation);
+        ElseBlock.Parent = this;
     }
 
     public ExpressionNode Expression { get; }

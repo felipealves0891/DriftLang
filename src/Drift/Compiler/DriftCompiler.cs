@@ -33,8 +33,8 @@ public class DriftCompiler
         var parser = new DriftParser(tokenizer);
         var script = parser.Parse();
 
-        var diagnostic = _semanticAnalizer.Analyze(script);
-        if (diagnostic.Errors.Count() > 0)
+        Diagnostic = _semanticAnalizer.Analyze(script);
+        if (Diagnostic.Errors.Count() > 0)
             return -1;
 
         var sw = Stopwatch.StartNew();

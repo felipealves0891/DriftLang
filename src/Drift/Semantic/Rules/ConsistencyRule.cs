@@ -12,7 +12,27 @@ public class ConsistencyRule : BaseRule
 {
     public ConsistencyRule()
     {
+        AddHandler<ReturnStatement>(ReturnStatementApply);
         AddHandler<AssignmentStatement>(AssignmentStatementApply);
+    }
+
+    private void ReturnStatementApply(DriftNode node)
+    {
+        bool findParentFunction(DriftNode dn)
+        {
+            if (dn.Parent is null)
+                return false;
+            else if (dn.Parent is FunctionDeclaration || dn.Parent is ActionStatement)
+                return true;
+            else
+                return findParentFunction(dn.Parent);
+
+        }
+
+        var statement = (ReturnStatement)node;
+        var isInsideFunction = findParentFunction(statement);
+        if (!isInsideFunction)
+            Aggregator.AddError("the return statement must be in a function, and never in the global context", statement.Location);
     }
 
     private void AssignmentStatementApply(DriftNode node)

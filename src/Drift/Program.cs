@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Drift.Compiler;
 using Drift.Core;
+using Drift.Core.Nodes;
 using Drift.Lexer;
 using Drift.Lexer.Reader;
 using Drift.Parser;
@@ -25,6 +26,9 @@ catch (Exception ex)
 {
     Console.WriteLine(ex.Message);
     foreach (var frame in DriftEnv.StackFrame)
-        Console.WriteLine(" at {0}", frame.Location);
+    {
+        var identifier = frame is IIdentifier withIdentifier ? withIdentifier.Identifier : "...";
+        Console.WriteLine(" at {0}: {1}", identifier, frame.Location);
+    }
 }
 

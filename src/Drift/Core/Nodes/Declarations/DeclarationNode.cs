@@ -4,7 +4,7 @@ using Drift.Core.Nodes.Statements;
 
 namespace Drift.Core.Nodes.Declarations;
 
-public abstract class DeclarationNode : BlockStatement
+public abstract class DeclarationNode : BlockStatement, IIdentifier
 {
     protected DeclarationNode(
         string identifier,
