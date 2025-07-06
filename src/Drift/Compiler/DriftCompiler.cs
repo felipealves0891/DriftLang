@@ -4,6 +4,7 @@ using Drift.Lexer;
 using Drift.Lexer.Reader;
 using Drift.Parser;
 using Drift.Runtime;
+using Drift.Runtime.Contexts;
 using Drift.Semantic;
 using Drift.Semantic.Analyzers;
 using Drift.Semantic.Diagnostic;
@@ -38,7 +39,7 @@ public class DriftCompiler
             return -1;
 
         var sw = Stopwatch.StartNew();
-        var interpreter = new DriftInterpreter(script);
+        var interpreter = new DriftInterpreter(new DriftExecutionContext(), script);
         interpreter.Interpret();
         sw.Stop();
 

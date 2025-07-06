@@ -27,11 +27,6 @@ public class DriftInterpreter
         _lastNodeIndex = _block.Nodes.Count();
     }
 
-    public DriftInterpreter(BlockStatement block)
-        : this(DriftExecutionContext.ExecutionContext, block)
-    {
-    }
-
     protected IExecutionContext Context => _context;
 
     public IDriftValue? Interpret()
