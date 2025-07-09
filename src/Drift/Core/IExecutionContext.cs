@@ -14,7 +14,7 @@ public interface IExecutionContext
     void Bind(string name, ExpressionNode node);
     void Set(string name, IDrift value);
     void Declare(string name);
-    
+
     IDriftFunction CreateInterpreter(FunctionDeclaration block);
     IDriftFunction CreateInterpreter(OnDeclaration block);
     IDriftFunction CreateInterpreter(BlockStatement block);
@@ -25,4 +25,6 @@ public interface IExecutionContext
 
     IDisposable EnterScope();
     void ExitScope();
+
+    IExecutionContext Clone();
 }

@@ -26,6 +26,18 @@ public sealed class DriftExecutionContext : IExecutionContext
         _eventManager = new();
     }
 
+    private DriftExecutionContext(
+        IEnumerable<ConcurrentDictionary<string, Guid>> references,
+        IEnumerable<ConcurrentDictionary<Guid, IDrift>> variables,
+        IEnumerable<ConcurrentDictionary<Guid, ExpressionNode>> binds,
+        DriftEventManager eventManager)
+    {
+        _references = new(references);
+        _variables = new(variables);
+        _binds = new(binds);
+        _eventManager = eventManager;
+    }
+
     public ConcurrentDictionary<string, Guid> CurrentReferences
         => _references.TryPeek(out var vars)
         ? vars
@@ -126,17 +138,17 @@ public sealed class DriftExecutionContext : IExecutionContext
 
     public IDriftFunction CreateInterpreter(FunctionDeclaration function)
     {
-        return new FunctionInterpreter(this, function);
+        return new FunctionInterpreter(Clone(), function);
     }
 
     public IDriftFunction CreateInterpreter(OnDeclaration observer)
     {
-        return new FunctionInterpreter(this, observer);
+        return new FunctionInterpreter(Clone(), observer);
     }
 
     public IDriftFunction CreateInterpreter(BlockStatement statement)
     {
-        return new FunctionInterpreter(this, statement);
+        return new FunctionInterpreter(Clone(), statement);
     }
 
     public void Event(string name)
@@ -152,5 +164,14 @@ public sealed class DriftExecutionContext : IExecutionContext
     public void Subscribe(string name, IDriftFunction function)
     {
         _eventManager.Subscribe(name, function);
+    }
+
+    public IExecutionContext Clone()
+    {
+        return new DriftExecutionContext(
+            _references.ToList(),
+            _variables.ToList(),
+            _binds.ToList(),
+            _eventManager);
     }
 }
