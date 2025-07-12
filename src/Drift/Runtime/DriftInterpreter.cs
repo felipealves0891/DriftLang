@@ -17,7 +17,7 @@ public class DriftInterpreter
     public DriftInterpreter(IExecutionContext context, BlockStatement block)
     {
         if (context == null)
-            throw new ArgumentNullException(nameof(block), "Execution context cannot be null or empty.");
+            throw new ArgumentNullException(nameof(context), "Execution context cannot be null.");
 
         if (block == null || block.Nodes == null || block.Nodes.Count() == 0)
             throw new ArgumentNullException(nameof(block), "Block statement cannot be null or empty.");
