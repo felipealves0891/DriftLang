@@ -56,7 +56,9 @@ public static class Keywords
 
     public static byte[] NOT => [(byte)'n', (byte)'o', (byte)'t'];
 
+    public static byte[] EXPORT => [(byte)'e', (byte)'x', (byte)'p', (byte)'o', (byte)'r', (byte)'t'];
 
+    public static byte[] MODULE => [(byte)'m', (byte)'o', (byte)'d', (byte)'u', (byte)'l', (byte)'e'];
 
     public static TokenType IsKeyword(byte[] chars)
     {
@@ -86,6 +88,8 @@ public static class Keywords
         if (AND.SequenceEqual(chars)) return TokenType.AND;
         if (OR.SequenceEqual(chars)) return TokenType.OR;
         if (NOT.SequenceEqual(chars)) return TokenType.NOT;
+        if (EXPORT.SequenceEqual(chars)) return TokenType.EXPORT;
+        if (MODULE.SequenceEqual(chars)) return TokenType.MODULE;
         return TokenType.IDENTIFIER;
     }
 }

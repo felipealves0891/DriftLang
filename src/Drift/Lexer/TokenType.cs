@@ -232,5 +232,15 @@ public enum TokenType
     /// <summary>
     /// Keywoord
     /// </summary>
-    NOT
+    NOT,
+    
+    /// <summary>
+    /// Keywoord
+    /// </summary>
+    EXPORT,
+        
+    /// <summary>
+    /// Keywoord
+    /// </summary>
+    MODULE
 } 
