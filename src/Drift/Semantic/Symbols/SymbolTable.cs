@@ -49,9 +49,9 @@ public class SymbolTable
         return true;
     }
 
-    public Symbol? Resolve(string name)
+    public Symbol? Resolve(string name, string? module = null)
     {
-        var symbolName = ResolveName(name);
+        var symbolName = ResolveName(name, module);
         foreach (var scope in _scopes)
             if (scope.TryGetValue(symbolName, out var sym))
                 return sym;
@@ -59,18 +59,18 @@ public class SymbolTable
         return null;
     }
 
-    public IEnumerable<SymbolDependence> ResolveParameters(string name)
+    public IEnumerable<SymbolDependence> ResolveParameters(string name, string? module = null)
     {
-        var symbol = Resolve(name);
+        var symbol = Resolve(name, module);
         if (!symbol.HasValue)
             return Enumerable.Empty<SymbolDependence>();
 
         return symbol.Value.Dependences;
     }
 
-    private string ResolveName(string name)
+    private string ResolveName(string name, string? module = null)
     {
-        var module = _modules.TryPeek(out var result) ? result : "main";
+        module ??= (_modules.TryPeek(out var result) ? result : "main");
         return $"{module}@{name}";
     }
 }

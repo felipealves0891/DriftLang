@@ -74,8 +74,20 @@ public class ReturnTypeResolver
             return ResolveTryExpression(tryExpression);
         else if (node is ArrayExpression array)
             return ResolveArrayExpression(array);
+        else if (node is ModuleAccessExpression moduleAccess)
+            return ResolveModuleAccessExpression(moduleAccess);
         else
             return _typeVoid;
+    }
+
+    private IDataType ResolveModuleAccessExpression(ModuleAccessExpression moduleAccess)
+    {
+        var definition = (FunctionCallExpression)moduleAccess.Expression;
+        var symbol = _symbolTable.Resolve(definition.Identifier, moduleAccess.Module);
+        if (!symbol.HasValue)
+            return _typeVoid;
+
+        return symbol.Value.Type;
     }
 
     private IDataType ResolveArrayAccessExpression(ArrayAccessExpression expression)

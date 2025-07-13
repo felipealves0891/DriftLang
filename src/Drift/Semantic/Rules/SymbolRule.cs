@@ -17,6 +17,7 @@ public class SymbolRule : BaseRule
     public SymbolRule()
     {
         _parameters = new List<Symbol>();
+        AddHandler<ExportStatement>(ExportStatementApply);
         AddHandler<BindDeclaration>(BindDeclarationApply);
         AddHandler<EventDeclaration>(EventDeclarationApply);
         AddHandler<FunctionDeclaration>(FunctionDeclarationApply);
@@ -37,6 +38,12 @@ public class SymbolRule : BaseRule
             Table.Declare(parameter);
 
         _parameters.Clear();
+    }
+
+    private void ExportStatementApply(DriftNode node)
+    {
+        var export = (ExportStatement)node;
+        FunctionDeclarationApply(export.Declaration);
     }
 
     private void VariableDeclarationApply(DriftNode node)

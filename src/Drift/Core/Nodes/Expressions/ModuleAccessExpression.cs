@@ -15,12 +15,19 @@ public class ModuleAccessExpression : ExpressionNode
         Expression = expression;
     }
 
-    public override DriftNode[] Children => [Expression];
+    public override DriftNode[] Children => [];
     public string Module { get; }
     public ExpressionNode Expression { get; }
 
     public override IDriftValue Evaluate(IExecutionContext context)
     {
-        throw new NotImplementedException();
+        var module = (IDriftModule)context.Get(Module);
+        var functionCall = (FunctionCallExpression)Expression;
+        var args = new Dictionary<string, IDriftValue>();
+        foreach (var keyValue in functionCall.Arguments)
+            args[keyValue.Key] = keyValue.Value.Evaluate(context);
+
+        return module.Invoke(functionCall.Identifier, args) ?? null!;
+
     }
 }

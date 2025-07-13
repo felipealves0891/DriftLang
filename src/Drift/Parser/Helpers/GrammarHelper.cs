@@ -119,7 +119,7 @@ public static class GrammarHelper
             return [];
 
         var parameters = new List<VariableDeclaration>();
-        source.Advance(TokenType.IDENTIFIER);
+        source.Advance([TokenType.IDENTIFIER, TokenType.CLOSE_PAREN]);
         while (source.Current.Type != TokenType.CLOSE_PAREN)
         {
             var identifier = source.Current;

@@ -19,6 +19,7 @@ public class TypeRule : BaseRule
         : base()
     {
         _nextScope = new Queue<Action>();
+        AddHandler<ModuleAccessExpression>(ModuleAccessExpressionApply);
         AddHandler<UnaryExpression>(UnaryExpressionApply);
         AddHandler<IfStatement>(IfStatementApply);
         AddHandler<EmitStatement>(EmitStatementApply);
@@ -33,6 +34,35 @@ public class TypeRule : BaseRule
     {
         if (_typeResolver is null)
             _typeResolver = new ReturnTypeResolver(table);
+    }
+
+    private void ModuleAccessExpressionApply(DriftNode node)
+    {
+        var moduleAccess = (ModuleAccessExpression)node;
+        var call = (FunctionCallExpression)moduleAccess.Expression;
+        var expectedParameters = Table.ResolveParameters(call.Identifier, moduleAccess.Module).ToArray();
+        if (call.Arguments.Count() != expectedParameters.Length)
+        {
+            var argumentsCount = call.Arguments.Count();
+            var parametersCount = expectedParameters.Length;
+
+            Aggregator.AddError($"The {call.Identifier} function expected {parametersCount} parameters, but received {argumentsCount},", call.Location);
+            return;
+        }
+
+        for (int i = 0; i < expectedParameters.Count(); i++)
+        {
+            var argument = call.Arguments[i.ToString()];
+            var parameter = expectedParameters[i];
+
+            call.Arguments.Remove(i.ToString());
+            call.Arguments[parameter.Identifier] = argument;
+
+            var passed = _typeResolver.Resolve(argument);
+            var expected = parameter.Type;
+            if (!passed.Equals(expected))
+                Aggregator.AddErrorIncompatibleTypes(passed.Name, expected.Name, node.Location);
+        }
     }
 
     private void UnaryExpressionApply(DriftNode node)

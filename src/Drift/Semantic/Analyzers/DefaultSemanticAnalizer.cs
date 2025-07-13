@@ -71,7 +71,9 @@ public class DefaultSemanticAnalizer : ISemanticAnalyzer
 
     private IDisposable? EnterScope(DriftNode node)
     {
-        if (node is StatementNode)
+        if (node is ModuleDeclaration)
+            return null;
+        else if (node is StatementNode)
             return _table.EnterScope();
         else
             return null;

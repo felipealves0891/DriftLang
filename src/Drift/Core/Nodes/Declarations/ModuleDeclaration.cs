@@ -24,6 +24,8 @@ public class ModuleDeclaration : DeclarationNode
     public override void Execute(IExecutionContext context)
     {
         var module = context.CreateModule(this);
+        module.Initialize();
+        
         context.Set(Identifier, module);
     }
 }

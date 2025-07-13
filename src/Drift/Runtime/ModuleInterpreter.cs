@@ -23,8 +23,7 @@ public class ModuleInterpreter : DriftInterpreter, IDriftModule
 
     public void Initialize()
     {
-        using (var _ = Context.EnterScope())
-            InternalInterpret();
+        InternalInterpret();
     }
 
     public IDriftValue? Invoke(string name, IDictionary<string, IDriftValue> parameters)

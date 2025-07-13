@@ -14,7 +14,7 @@ public class ExportStatement : StatementNode
         Declaration = declaration;
     }
 
-    public override DriftNode[] Children => [Declaration];
+    public override DriftNode[] Children => [];
     public FunctionDeclaration Declaration { get; }
 
     public override void Execute(IExecutionContext context)
