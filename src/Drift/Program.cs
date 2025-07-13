@@ -17,7 +17,7 @@ Log.Logger = new LoggerConfiguration()
 try
 {
     var compiler = new DriftCompiler();
-    var executionTime = compiler.Compile(@"D:\Source\Scripts\main_old.dft");
+    var executionTime = compiler.Compile(@"D:\Source\Scripts\main.dft");
 
     Console.WriteLine("Execution Time: {0}", executionTime);
     Console.WriteLine(compiler.Diagnostic);

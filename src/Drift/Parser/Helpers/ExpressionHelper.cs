@@ -1,5 +1,6 @@
 using System;
 using Drift.Core.Nodes;
+using Drift.Core.Nodes.Declarations;
 using Drift.Core.Nodes.Expressions;
 using Drift.Core.Nodes.Helpers;
 using Drift.Core.Nodes.Values;
@@ -100,12 +101,23 @@ public class ExpressionHelper
             return ArrayAccessExpressionParse();
         else if (CurrentType == TokenType.IDENTIFIER && NextType == TokenType.ARROW)
             return StructAccessParser();
+        else if (CurrentType == TokenType.IDENTIFIER && NextType == TokenType.ACCESS)
+            return ModuleAccessParser();
         else if (BeforeType == TokenType.ASSIGNMENT && CurrentType == TokenType.IDENTIFIER && NextType == TokenType.OPEN_BRACE)
             return GrammarHelper.StructInstanceValueParse(_source);
         else if (CurrentType == TokenType.IDENTIFIER)
             return IdentifierParse();
         else
             return ParseComplexExpressions();
+    }
+
+    private DriftNode ModuleAccessParser()
+    {
+        var module = _source.Current;
+        Consume();
+        Consume();
+        var expression = (FunctionCallExpression)ParseExpression();
+        return new ModuleAccessExpression(module.Source, expression, module.Location.Join(expression.Location));
     }
 
     private DriftNode StructAccessParser()

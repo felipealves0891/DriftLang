@@ -56,7 +56,7 @@ public class TryExpression : ExpressionNode
         IExecutionContext context,
         IDriftValue value)
     { 
-        var interpreter = context.CreateInterpreter(action);
+        var interpreter = context.CreateFunction(action);
         var requerides = action.Parameters.FirstOrDefault();
         var parameters = new Dictionary<string, IDriftValue>();
         if (requerides is not null)

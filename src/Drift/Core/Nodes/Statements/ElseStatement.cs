@@ -18,7 +18,7 @@ public class ElseStatement : BlockStatement
 
     public override void Execute(IExecutionContext context)
     {
-        var interpreter = context.CreateInterpreter(this);
+        var interpreter = context.CreateFunction(this);
         var value = interpreter.Invoke(new Dictionary<string, IDriftValue>());
         if (value is not null)
             throw new BreakFlow(value);

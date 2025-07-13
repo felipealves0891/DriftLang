@@ -25,7 +25,7 @@ public class WhileStatement : BlockStatement
     {
         using (context.EnterScope())
         {
-            var interpreter = context.CreateInterpreter(this);
+            var interpreter = context.CreateFunction(this);
             var control = (BooleanLiteral)Expression.Evaluate(context);
             while (control.Value)
             {

@@ -40,7 +40,7 @@ public class IfStatement : BlockStatement
         var result = (BooleanLiteral)Expression.Evaluate(context);
         if (result.Value)
         {
-            var interpreter = context.CreateInterpreter(this);
+            var interpreter = context.CreateFunction(this);
             var value = interpreter.Invoke(new Dictionary<string, IDriftValue>());
             if (value is not null)
                 throw new BreakFlow(value);

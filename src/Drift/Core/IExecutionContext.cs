@@ -15,9 +15,9 @@ public interface IExecutionContext
     void Set(string name, IDrift value);
     void Declare(string name);
 
-    IDriftFunction CreateInterpreter(FunctionDeclaration block);
-    IDriftFunction CreateInterpreter(OnDeclaration block);
-    IDriftFunction CreateInterpreter(BlockStatement block);
+    IDriftFunction CreateFunction(FunctionDeclaration block);
+    IDriftFunction CreateFunction(OnDeclaration block);
+    IDriftFunction CreateFunction(BlockStatement block);
 
     void Event(string name);
     void Publish(string name, IDictionary<string, IDriftValue> arguments);
@@ -27,4 +27,8 @@ public interface IExecutionContext
     void ExitScope();
 
     IExecutionContext Clone();
+
+    IDriftModule CreateModule(ModuleDeclaration declaration);
+    void Expose(string name);
+    bool Exposed(string name);
 }

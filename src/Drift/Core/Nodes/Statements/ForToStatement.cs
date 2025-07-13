@@ -29,7 +29,7 @@ public class ForToStatement : BlockStatement
     {
         using (context.EnterScope())
         {
-            var interpreter = context.CreateInterpreter(this);
+            var interpreter = context.CreateFunction(this);
 
             Declaration.Declare(context);
             Declaration.Execute(context);

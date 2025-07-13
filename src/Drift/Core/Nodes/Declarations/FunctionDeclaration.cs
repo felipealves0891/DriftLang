@@ -31,7 +31,7 @@ public class FunctionDeclaration : DeclarationNode
 
     public override void Execute(IExecutionContext context)
     {
-        var function = context.CreateInterpreter(this);
+        var function = context.CreateFunction(this);
         context.Set(Identifier, function);
     }
 

@@ -7,6 +7,7 @@ public struct SymbolDependence
 {
     public string Identifier { get; }
     public IDataType Type { get; }
+    public bool Immutable { get; } = true;
     public SourceLocation Location { get; }
 
     public SymbolDependence(
@@ -18,11 +19,12 @@ public struct SymbolDependence
         Type = type;
         Location = location;
     }
-    
+
     public SymbolDependence(Symbol symbol)
     {
         Identifier = symbol.Identifier;
         Type = symbol.Type;
         Location = symbol.Location;
+        Immutable = symbol.Immutable;
     }
 }

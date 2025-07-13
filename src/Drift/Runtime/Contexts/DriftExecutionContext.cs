@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Data.Common;
 using System.Linq.Expressions;
 using Drift.Core;
 using Drift.Core.Helpers;
@@ -16,6 +17,7 @@ public sealed class DriftExecutionContext : IExecutionContext
     private readonly ConcurrentStack<ConcurrentDictionary<string, Guid>> _references = new();
     private readonly ConcurrentStack<ConcurrentDictionary<Guid, IDrift>> _variables = new();
     private readonly ConcurrentStack<ConcurrentDictionary<Guid, ExpressionNode>> _binds = new();
+    private readonly ConcurrentStack<HashSet<Guid>> _exposes = new();
     private readonly DriftEventManager _eventManager;
 
     public DriftExecutionContext()
@@ -23,6 +25,7 @@ public sealed class DriftExecutionContext : IExecutionContext
         _references.Push(new());
         _variables.Push(new());
         _binds.Push(new());
+        _exposes.Push(new());
         _eventManager = new();
     }
 
@@ -30,11 +33,13 @@ public sealed class DriftExecutionContext : IExecutionContext
         IEnumerable<ConcurrentDictionary<string, Guid>> references,
         IEnumerable<ConcurrentDictionary<Guid, IDrift>> variables,
         IEnumerable<ConcurrentDictionary<Guid, ExpressionNode>> binds,
+        IEnumerable<HashSet<Guid>> exposes,
         DriftEventManager eventManager)
     {
         _references = new(references);
         _variables = new(variables);
         _binds = new(binds);
+        _exposes = new(exposes);
         _eventManager = eventManager;
     }
 
@@ -50,6 +55,11 @@ public sealed class DriftExecutionContext : IExecutionContext
 
     public ConcurrentDictionary<Guid, ExpressionNode> CurrentBinds
         => _binds.TryPeek(out var vars)
+        ? vars
+        : throw new InvalidOperationException("No variables available.");
+
+    public HashSet<Guid> CurrentExposes
+        => _exposes.TryPeek(out var vars)
         ? vars
         : throw new InvalidOperationException("No variables available.");
 
@@ -99,15 +109,6 @@ public sealed class DriftExecutionContext : IExecutionContext
         throw new KeyNotFoundException($"Variable '{name}' is not defined.");
     }
 
-    private Guid GetReference(string name)
-    {
-        foreach (var reference in _references)
-            if (reference.TryGetValue(name, out var value))
-                return value;
-
-        throw new KeyNotFoundException($"Variable '{name}' is not declared.");
-    }
-
     public void Set(string name, IDrift value)
     {
         var guid = GetReference(name);
@@ -136,19 +137,52 @@ public sealed class DriftExecutionContext : IExecutionContext
         CurrentBinds[guid] = node;
     }
 
-    public IDriftFunction CreateInterpreter(FunctionDeclaration function)
+    public void Expose(string name)
+    {
+        var reference = GetReference(name);
+        CurrentExposes.Add(reference);
+    }
+
+    public bool Exposed(string name)
+    {
+        var reference = GetReference(name);
+        foreach (var expose in _exposes)
+            if (expose.Contains(reference))
+                return true;
+
+        return false;
+    }
+
+    private Guid GetReference(string name)
+    {
+        foreach (var reference in _references)
+            if (reference.TryGetValue(name, out var value))
+                return value;
+
+        throw new KeyNotFoundException($"Variable '{name}' is not declared.");
+    }
+    
+    public IDriftFunction CreateFunction(FunctionDeclaration function)
     {
         return new FunctionInterpreter(Clone(), function);
     }
 
-    public IDriftFunction CreateInterpreter(OnDeclaration observer)
+    public IDriftFunction CreateFunction(OnDeclaration observer)
     {
         return new FunctionInterpreter(Clone(), observer);
     }
 
-    public IDriftFunction CreateInterpreter(BlockStatement statement)
+    public IDriftFunction CreateFunction(BlockStatement statement)
     {
         return new FunctionInterpreter(Clone(), statement);
+    }
+    
+    public IDriftModule CreateModule(ModuleDeclaration statement)
+    {
+        return new ModuleInterpreter(
+            statement.Identifier,
+            Clone(),
+            statement);
     }
 
     public void Event(string name)
@@ -172,6 +206,7 @@ public sealed class DriftExecutionContext : IExecutionContext
             _references.ToList(),
             _variables.ToList(),
             _binds.ToList(),
+            _exposes.ToList(),
             _eventManager);
     }
 }

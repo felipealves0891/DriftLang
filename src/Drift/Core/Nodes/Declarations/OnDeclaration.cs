@@ -22,7 +22,7 @@ public class OnDeclaration : FunctionDeclaration
 
     public override void Execute(IExecutionContext context)
     {
-        context.Subscribe(Identifier, context.CreateInterpreter(this));
+        context.Subscribe(Identifier, context.CreateFunction(this));
     }
 
     public override string ToString()

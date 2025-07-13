@@ -24,7 +24,7 @@ public class DefaultSemanticAnalizer : ISemanticAnalyzer
         _references = new ReferenceMapper(_diagnostic);
         InitializeEnv();
     }
-    
+
     private void InitializeEnv()
     {
         var functions = DriftEnv.FunctionRegistry.RegisteredFunctions;
@@ -41,10 +41,10 @@ public class DefaultSemanticAnalizer : ISemanticAnalyzer
 
                 symbol.Dependences.Add(new SymbolDependence(dependence));
             }
-            
+
             if (!_table.Declare(symbol))
                 _diagnostic.AddErrorAlreadyDeclaration(symbol.Identifier, symbol.Location);
-                
+
         }
     }
 
@@ -55,6 +55,7 @@ public class DefaultSemanticAnalizer : ISemanticAnalyzer
             rule.Apply(node, _table, _references, _diagnostic);
         }
 
+        using (EnterModule(node))
         using (EnterFrom(node))
         using (EnterScope(node))
         {
@@ -75,13 +76,21 @@ public class DefaultSemanticAnalizer : ISemanticAnalyzer
         else
             return null;
     }
-    
+
     private IDisposable? EnterFrom(DriftNode node)
     {
         if (node is BindDeclaration bind)
             return _references.EnterFrom(new Reference(bind));
         else if (node is OnDeclaration on)
             return _references.EnterFrom(new Reference(on));
+        else
+            return null;
+    }
+
+    private IDisposable? EnterModule(DriftNode node)
+    {
+        if (node is ModuleDeclaration module)
+            return _table.EnterModule(module.Identifier);
         else
             return null;
     }

@@ -18,6 +18,17 @@ public class FunctionInterpreter : DriftInterpreter, IDriftFunction
         Parameters = new Dictionary<string, IDataType>();
     }
 
+    public FunctionInterpreter(
+        string name,
+        IExecutionContext context,
+        BlockStatement statement)
+        : base(context, statement)
+    {
+        Name = name;
+        Type = DriftEnv.TypeRegistry.Resolve(name);
+        Parameters = new Dictionary<string, IDataType>();
+    }
+
     public FunctionInterpreter(IExecutionContext context, FunctionDeclaration declaration)
         : base(context, declaration)
     {
@@ -63,7 +74,6 @@ public class FunctionInterpreter : DriftInterpreter, IDriftFunction
             {
                 return breakFlow.Value;
             }
-            
         }
         
     }
