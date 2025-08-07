@@ -15,7 +15,7 @@ keyword             = "event"
                     | "for"                    
                     | "while"
                     | "emit"
-                    | "match"
+                    | "try"
                     | "success"
                     | "error"
                     | "true"
@@ -26,7 +26,9 @@ keyword             = "event"
                     | "string"
                     | "int"
                     | "float"
-                    | "bool";
+                    | "bool"
+                    | "export"
+                    | "module";
 
 
 program             = { statement } ;
@@ -48,15 +50,18 @@ declaration         = variableDeclaration
                     | structDeclaration 
                     | functionDeclaration 
                     | arrayDeclaration
-                    | actionDeclaration;
+                    | actionDeclaration
+                    | moduleDeclaration;
 
 returnStatement     = expression ; 
+
+moduleDeclaration   = "module" identifier "{" block "}";
 
 eventDeclaration    = "event" identifier "(" parameters ")" ;
 
 subscribeDeclaration= "sub" identifier "(" parameters ")" block ;
 
-variableDeclaration = ("let" | "const" | "async let") identifier ":" type [ "=" expression ] ";" ;
+variableDeclaration = ("let" | "const") identifier ":" type [ "=" expression ] ";" ;
 
 bindDeclaration     = "bind" identifier ":" type "->" expression ";" ;
 
@@ -64,9 +69,11 @@ structDeclaration   = "type" identifier "{" field "}" ;
 
 field               = identifier ":" type { "," identifier ":" type } ;
 
+exportStatement     = "export" functionDeclaration;
+
 functionDeclaration = "fun" identifier "(" parameters "):" type block ;
 
-arrayDeclaration    = "[" expression [ "," match ] "]" ;
+arrayDeclaration    = "[" expression [ "," try ] "]" ;
 
 actionDeclaration   = "(" parameters ")" ":" type block ;
 
@@ -92,9 +99,9 @@ emitStatement       = "emit" identifier "(" arguments ")" ;
 
 expressionStatement = expression | pipeline ";";
 
-expression          = assignment | match;
+expression          = assignment | try;
 
-match               = "match" expression "{" 
+try                 = "try" expression "{" 
                         "success" actionDeclaration "," 
                         "error" actionDeclaration  
                       "}" ;
