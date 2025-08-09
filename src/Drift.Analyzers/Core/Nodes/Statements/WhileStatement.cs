@@ -3,6 +3,7 @@ using Drift.Analyzers.Core.Nodes.Expressions;
 using Drift.Analyzers.Core.Location;
 using System.Text;
 using Drift.Analyzers.Core.Nodes.Literals;
+using Drift.Analyzers.CodeGen;
 
 namespace Drift.Analyzers.Core.Nodes.Statements;
 
@@ -33,6 +34,11 @@ public class WhileStatement : BlockStatement
                 control = (BooleanLiteral)Expression.Evaluate(context);
             }
         }
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
     }
 
     public override string ToString()

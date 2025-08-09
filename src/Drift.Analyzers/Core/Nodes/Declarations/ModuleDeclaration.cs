@@ -1,4 +1,5 @@
 using System;
+using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Statements;
 
@@ -27,5 +28,10 @@ public class ModuleDeclaration : DeclarationNode
         module.Initialize();
         
         context.Set(Identifier, module);
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
     }
 }

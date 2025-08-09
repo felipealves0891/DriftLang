@@ -3,6 +3,7 @@ using Drift.Analyzers.Core.Nodes.Statements;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Helpers;
 using Drift.Analyzers.Core.Nodes.Literals;
+using Drift.Analyzers.CodeGen;
 
 namespace Drift.Analyzers.Core.Nodes.Expressions;
 
@@ -71,5 +72,10 @@ public class TryExpression : ExpressionNode
     public override string ToString()
     {
         return $"try {Expression} {{success{Success},error{Error}}}";
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
     }
 }

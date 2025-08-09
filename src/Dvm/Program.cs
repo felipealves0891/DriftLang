@@ -1,10 +1,7 @@
-﻿// Exemplo: x = 1 + 2 * 3
-using Dvm;
+﻿using Dvm;
 
 public static class Program
 {
     public static void Main()
-    {
-        
-    }
+    {}
 }

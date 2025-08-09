@@ -1,4 +1,5 @@
 using System;
+using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 
 namespace Drift.Analyzers.Core.Nodes.Declarations;
@@ -26,6 +27,11 @@ public class StructDeclaration : DeclarationNode
 
     public override void Execute(IExecutionContext context)
     {
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
     }
 
     public override string ToString()

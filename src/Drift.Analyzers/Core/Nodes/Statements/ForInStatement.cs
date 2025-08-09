@@ -3,6 +3,7 @@ using Drift.Analyzers.Core.Nodes.Declarations;
 using Drift.Analyzers.Core.Nodes.Values;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Expressions;
+using Drift.Analyzers.CodeGen;
 
 namespace Drift.Analyzers.Core.Nodes.Statements;
 
@@ -26,6 +27,11 @@ public class ForInStatement : BlockStatement
     public override DriftNode[] Children => Nodes;
 
     public override void Execute(IExecutionContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
     {
         throw new NotImplementedException();
     }

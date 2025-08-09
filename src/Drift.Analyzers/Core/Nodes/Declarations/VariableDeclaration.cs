@@ -2,6 +2,7 @@ using System;
 using Drift.Analyzers.Core.Nodes.Expressions;
 using Drift.Analyzers.Core.Ast.Types;
 using Drift.Analyzers.Core.Location;
+using Drift.Analyzers.CodeGen;
 
 namespace Drift.Analyzers.Core.Nodes.Declarations;
 
@@ -62,6 +63,11 @@ public class VariableDeclaration : DeclarationNode
     {
         if(Assignment is not null)
             context.Set(Identifier, Assignment.Evaluate(context));
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
     }
 
     public override string ToString()

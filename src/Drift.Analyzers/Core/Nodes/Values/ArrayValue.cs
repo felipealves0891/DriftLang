@@ -1,4 +1,5 @@
 using System.Collections;
+using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Ast.Types;
 using Drift.Analyzers.Core.Location;
 
@@ -24,6 +25,11 @@ public class ArrayValue : ValueNode
     public IDriftValue[] Source { get; }
     public override object Unwrap => Source;
     public override DriftNode[] Children => Source.Cast<DriftNode>().ToArray();
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
+    }
 
     public override IEnumerator GetEnumerator()
     {

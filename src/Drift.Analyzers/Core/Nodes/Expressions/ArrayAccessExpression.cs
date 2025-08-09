@@ -1,4 +1,5 @@
 using System;
+using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Helpers;
 using Drift.Analyzers.Core.Nodes.Literals;
@@ -27,6 +28,11 @@ public class ArrayAccessExpression : ExpressionNode, IIdentifier
         var array = (ArrayValue)context.Get(Identifier);
         var index = (IntegerLiteral)Index.Evaluate(context);
         return array.Source[index.Value];
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
     }
 
     public override string ToString()

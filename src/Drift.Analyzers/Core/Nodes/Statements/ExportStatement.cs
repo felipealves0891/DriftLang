@@ -1,4 +1,5 @@
 using System;
+using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Declarations;
 
@@ -22,5 +23,10 @@ public class ExportStatement : StatementNode
         Declaration.Declare(context);
         Declaration.Execute(context);
         context.Expose(Declaration.Identifier);
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
     }
 }

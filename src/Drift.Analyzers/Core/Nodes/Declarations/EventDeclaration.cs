@@ -1,4 +1,5 @@
 using System;
+using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Ast.Types;
 using Drift.Analyzers.Core.Location;
 
@@ -28,6 +29,11 @@ public class EventDeclaration : DeclarationNode
 
     public override void Execute(IExecutionContext context)
     {}
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
+    }
 
     public override string ToString()
     {

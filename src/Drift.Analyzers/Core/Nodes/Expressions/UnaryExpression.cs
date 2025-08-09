@@ -1,4 +1,5 @@
 using System;
+using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Literals;
 
@@ -43,6 +44,11 @@ public class UnaryExpression : ExpressionNode
                 return new FloatLiteral(negative, Location);
             }
         }
+    }
+
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
     }
 
     public override string ToString()

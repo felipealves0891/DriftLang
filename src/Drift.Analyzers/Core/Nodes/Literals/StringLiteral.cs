@@ -1,4 +1,5 @@
 using System;
+using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Ast.Types;
 using Drift.Analyzers.Core.Location;
 
@@ -24,4 +25,8 @@ public class StringLiteral : LiteralNode<string>
         return $"'{Value}'";
     }
 
+    public override void GenerateCode(Stack<Instruction> instructions)
+    {
+        throw new NotImplementedException();
+    }
 }
