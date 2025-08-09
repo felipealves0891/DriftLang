@@ -1,5 +1,4 @@
 using System.Collections;
-using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Ast.Types;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Expressions;
@@ -22,12 +21,7 @@ public class StructInstanceValue : ValueNode
     public override IDataType Type { get; }
     public Dictionary<string, ExpressionNode> Properties { get; }
     public override DriftNode[] Children => Properties.Values.ToArray();
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public override IEnumerator GetEnumerator()
         => Properties.Values.GetEnumerator();
 

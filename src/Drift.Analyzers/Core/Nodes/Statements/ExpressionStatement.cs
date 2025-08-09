@@ -1,7 +1,6 @@
 using System;
 using Drift.Analyzers.Core.Nodes.Expressions;
 using Drift.Analyzers.Core.Location;
-using Drift.Analyzers.CodeGen;
 
 namespace Drift.Analyzers.Core.Nodes.Statements;
 
@@ -23,11 +22,6 @@ public class ExpressionStatement : StatementNode
     public override void Execute(IExecutionContext context)
     {
         Expression.Evaluate(context);
-    }
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
     }
 
     public override string ToString()

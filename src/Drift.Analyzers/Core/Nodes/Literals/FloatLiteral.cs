@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Ast.Types;
 using Drift.Analyzers.Core.Location;
 
@@ -17,11 +16,6 @@ public class FloatLiteral : LiteralNode<decimal>
     }
 
     public override DriftNode[] Children => [];
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
-    }
 
     protected override decimal ValueParse(object value)
     {

@@ -1,5 +1,4 @@
 using System;
-using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 
 namespace Drift.Analyzers.Core.Nodes.Expressions;
@@ -34,11 +33,6 @@ public class FunctionCallExpression : ExpressionNode, IIdentifier
             args[keyValue.Key] = keyValue.Value.Evaluate(context);    
 
         return fun.Invoke(args) ?? null!;
-    }
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
     }
 
     public override string ToString()

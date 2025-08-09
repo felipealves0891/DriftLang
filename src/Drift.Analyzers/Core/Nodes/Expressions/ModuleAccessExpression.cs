@@ -1,5 +1,4 @@
 using System;
-using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 
 namespace Drift.Analyzers.Core.Nodes.Expressions;
@@ -30,10 +29,5 @@ public class ModuleAccessExpression : ExpressionNode
 
         return module.Invoke(functionCall.Identifier, args) ?? null!;
 
-    }
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
     }
 }

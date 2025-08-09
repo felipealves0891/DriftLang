@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Drift.Analyzers\Drift.Analyzers.csproj" />
-    <ProjectReference Include="..\Drift.VirtualMachine\Drift.VirtualMachine.csproj" />
   </ItemGroup>
 
 </Project>

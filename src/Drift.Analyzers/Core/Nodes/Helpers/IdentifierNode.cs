@@ -1,5 +1,4 @@
 using System;
-using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Ast.Types;
 using Drift.Analyzers.Core.Location;
 
@@ -19,12 +18,6 @@ public class IdentifierNode : DriftNode, IDriftValue, IIdentifier
     public IDataType Type { get; set; } = null!;
     public object Unwrap => null!;
     public override DriftNode[] Children => [];
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
-    }
-
     public override string ToString()
     {
         return Value;

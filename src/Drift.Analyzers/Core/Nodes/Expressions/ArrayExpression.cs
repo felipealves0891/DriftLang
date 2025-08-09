@@ -1,5 +1,4 @@
 using System;
-using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Values;
 
@@ -22,10 +21,5 @@ public class ArrayExpression : ExpressionNode
     {
         var values = Expressions.Select(x => x.Evaluate(context)).ToArray();
         return new ArrayValue(values, Location);
-    }
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
     }
 }

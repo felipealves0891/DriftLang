@@ -3,7 +3,6 @@ using Drift.Analyzers.Core.Nodes.Expressions;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Declarations;
 using Drift.Analyzers.Core.Ast.Types;
-using Drift.Analyzers.CodeGen;
 
 namespace Drift.Analyzers.Core.Nodes.Statements;
 
@@ -28,11 +27,6 @@ public class ActionStatement : BlockStatement
     
     public override void Execute(IExecutionContext context)
     {
-    }
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
     }
 
     public override string ToString()

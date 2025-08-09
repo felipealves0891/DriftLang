@@ -1,5 +1,4 @@
 using System;
-using Drift.Analyzers.CodeGen;
 using Drift.Analyzers.Core.Location;
 using Drift.Analyzers.Core.Nodes.Helpers;
 
@@ -23,11 +22,6 @@ public class ValueExpression : ExpressionNode
             return (IDriftValue)context.Get(identifier.Value);
             
         return Value;
-    }
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
     }
 
     public override string ToString()

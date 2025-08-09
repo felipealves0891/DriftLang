@@ -2,7 +2,6 @@ using System;
 using Drift.Analyzers.Core.Nodes.Expressions;
 using Drift.Analyzers.Core.Location;
 using System.Collections.Concurrent;
-using Drift.Analyzers.CodeGen;
 
 namespace Drift.Analyzers.Core.Nodes.Statements;
 
@@ -30,11 +29,6 @@ public class EmitStatement : StatementNode, IIdentifier
             args[argument.Key] = argument.Value.Evaluate(context);
 
         context.Publish(Identifier, args);
-    }
-
-    public override void GenerateCode(Stack<Instruction> instructions)
-    {
-        throw new NotImplementedException();
     }
 
     public override string ToString()
