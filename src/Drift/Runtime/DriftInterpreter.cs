@@ -1,9 +1,8 @@
 using System;
-using Drift.Core;
-using Drift.Core.Nodes;
-using Drift.Core.Nodes.Declarations;
-using Drift.Core.Nodes.Statements;
-using Drift.Runtime.Contexts;
+using Drift.Analyzers.Core;
+using Drift.Analyzers.Core.Nodes;
+using Drift.Analyzers.Core.Nodes.Declarations;
+using Drift.Analyzers.Core.Nodes.Statements;
 
 namespace Drift.Runtime;
 

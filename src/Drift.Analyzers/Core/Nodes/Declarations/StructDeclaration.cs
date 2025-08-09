@@ -1,0 +1,35 @@
+using System;
+using Drift.Analyzers.Core.Location;
+
+namespace Drift.Analyzers.Core.Nodes.Declarations;
+
+public class StructDeclaration : DeclarationNode
+{
+    public StructDeclaration(
+        string identifier,
+        StructFieldDeclaration[] fields,
+        SourceLocation location)
+        : base(identifier, location)
+    {
+        Fields = fields;
+        foreach (var field in Fields)
+            field.Parent = this;
+    }
+
+    public StructFieldDeclaration[] Fields { get; }
+
+    public override DriftNode[] Children => Fields;
+
+    public override void Declare(IExecutionContext context)
+    {
+    }
+
+    public override void Execute(IExecutionContext context)
+    {
+    }
+
+    public override string ToString()
+    {
+        return $"type {Identifier} {{...}}";
+    }
+}

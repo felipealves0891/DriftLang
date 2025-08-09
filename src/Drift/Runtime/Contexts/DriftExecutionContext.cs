@@ -2,12 +2,12 @@ using System;
 using System.Collections.Concurrent;
 using System.Data.Common;
 using System.Linq.Expressions;
-using Drift.Core;
-using Drift.Core.Helpers;
-using Drift.Core.Nodes;
-using Drift.Core.Nodes.Declarations;
-using Drift.Core.Nodes.Expressions;
-using Drift.Core.Nodes.Statements;
+using Drift.Analyzers.Core;
+using Drift.Analyzers.Core.Helpers;
+using Drift.Analyzers.Core.Nodes;
+using Drift.Analyzers.Core.Nodes.Declarations;
+using Drift.Analyzers.Core.Nodes.Expressions;
+using Drift.Analyzers.Core.Nodes.Statements;
 using Drift.Runtime.EventManager;
 
 namespace Drift.Runtime.Contexts;

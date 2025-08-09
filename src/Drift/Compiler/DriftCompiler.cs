@@ -1,14 +1,14 @@
 using System;
 using System.Diagnostics;
-using Drift.Lexer;
-using Drift.Lexer.Reader;
-using Drift.Parser;
+using Drift.Analyzers.Lexer;
+using Drift.Analyzers.Lexer.Reader;
+using Drift.Analyzers.Parser;
 using Drift.Runtime;
 using Drift.Runtime.Contexts;
-using Drift.Semantic;
-using Drift.Semantic.Analyzers;
-using Drift.Semantic.Diagnostic;
-using Drift.Semantic.Rules;
+using Drift.Analyzers.Semantic;
+using Drift.Analyzers.Semantic.Analyzers;
+using Drift.Analyzers.Semantic.Diagnostic;
+using Drift.Analyzers.Semantic.Rules;
 
 namespace Drift.Compiler;
 

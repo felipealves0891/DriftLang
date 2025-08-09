@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Concurrent;
-using Drift.Core.Nodes;
+using Drift.Analyzers.Core.Nodes;
 
 namespace Drift.Runtime.EventManager;
 

@@ -1,10 +1,10 @@
 using System;
-using Drift.Core;
-using Drift.Core.Ast.Types;
-using Drift.Core.Helpers;
-using Drift.Core.Nodes;
-using Drift.Core.Nodes.Declarations;
-using Drift.Core.Nodes.Statements;
+using Drift.Analyzers.Core;
+using Drift.Analyzers.Core.Ast.Types;
+using Drift.Analyzers.Core.Helpers;
+using Drift.Analyzers.Core.Nodes;
+using Drift.Analyzers.Core.Nodes.Declarations;
+using Drift.Analyzers.Core.Nodes.Statements;
 
 namespace Drift.Runtime;
 

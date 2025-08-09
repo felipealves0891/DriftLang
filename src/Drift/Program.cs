@@ -1,19 +1,16 @@
-﻿using System.Diagnostics;
+﻿using Serilog;
+using Drift.Runtime.StackFrame;
+using Drift.Analyzers.Core;
 using Drift.Compiler;
-using Drift.Core;
-using Drift.Core.Nodes;
-using Drift.Lexer;
-using Drift.Lexer.Reader;
-using Drift.Parser;
-using Drift.Runtime;
-using Drift.Semantic.Analyzers;
-using Drift.Semantic.Rules;
-using Serilog;
+using Drift.Analyzers.Core.Nodes;
 
 Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.File(@"D:\Source\Scripts\logs\execution.txt", rollingInterval: RollingInterval.Minute)
             .CreateLogger();
+
+DriftEnv.StackFrame = DriftStackFrame.StackFrame;
+
 try
 {
     var compiler = new DriftCompiler();

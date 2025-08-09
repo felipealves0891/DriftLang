@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using Drift.Core;
-using Drift.Core.Helpers;
-using Drift.Core.Nodes;
+using Drift.Analyzers.Core;
+using Drift.Analyzers.Core.Helpers;
+using Drift.Analyzers.Core.Nodes;
 using Serilog;
 
 namespace Drift.Runtime.StackFrame;
