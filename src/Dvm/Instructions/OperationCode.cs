@@ -1,6 +1,6 @@
-namespace Dvm;
+namespace Dvm.Instructions;
 
-public enum InstructionCode
+public enum OperationCode
 {
     // --- Aritmética e lógica ---
     PUSH_CONST,

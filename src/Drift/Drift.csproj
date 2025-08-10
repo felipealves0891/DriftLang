@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Drift.Analyzers\Drift.Analyzers.csproj" />
+    <ProjectReference Include="..\Dvm\Dvm.csproj" />
   </ItemGroup>
 
 </Project>

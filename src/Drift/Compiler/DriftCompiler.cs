@@ -9,13 +9,15 @@ using Drift.Analyzers.Semantic;
 using Drift.Analyzers.Semantic.Analyzers;
 using Drift.Analyzers.Semantic.Diagnostic;
 using Drift.Analyzers.Semantic.Rules;
+using Dvm.Instructions;
+using Drift.Analyzers.Core.Nodes.Statements;
 
 namespace Drift.Compiler;
 
 public class DriftCompiler
 {
     private readonly DefaultSemanticAnalizer _semanticAnalizer;
-    
+
     public DriftCompiler()
     {
         _semanticAnalizer = new DefaultSemanticAnalizer([
